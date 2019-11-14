@@ -26,7 +26,7 @@ $> pip3 install -r requirements.txt
 # Run the project
 To run the users API application execute the runserver.sh script:
 ```
-$> ./runserver.sh
+$> make run
 ```
 
 Now you can make a request to:
