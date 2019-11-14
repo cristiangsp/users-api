@@ -1,0 +1,33 @@
+import pycountry
+import uuid
+
+from users_api.database import users_database, budget_database
+from users_api.model.user import User
+from users_api.model.budget import Budget
+from users_api.exception.user import AlreadyExists
+from users_api.exception.country import NotValid
+
+class CreateUser:
+    def execute(self, name, email, password, role, country):
+        if (users_database.select_by('email', email)):
+            raise AlreadyExists()
+
+        if not pycountry.countries.get(alpha_2=country):
+            raise NotValid()
+
+        user = User(name, email, password, role, country)
+        users_database.insert(user.to_dict())
+
+        if user.role == 'advertiser':
+            budget = Budget()
+            budget.id = str(uuid.uuid4())
+            budget.user_id = user.id
+
+            user_country = user.country
+
+            if (user_country == 'US'):
+                budget.amount = 10000
+            else:
+                budget.amount = 1000
+
+            budget_database.insert(budget.to_dict())
