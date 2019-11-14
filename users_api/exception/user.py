@@ -13,3 +13,7 @@ class EmailNotValid(Exception):
 class RoleNotValid(Exception):
     def __init__(self):
         self.message = "Role must be 'advertiser' or 'publisher'"
+
+class AlreadyExists(Exception):
+    def __init__(self):
+        self.message = "User already exists"
