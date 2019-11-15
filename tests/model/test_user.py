@@ -30,3 +30,22 @@ class TestUser(unittest.TestCase):
         with self.assertRaises(RoleNotValid):
             User('Awesome name', 'dummy@email.com', 'dummy-password', 'invalid-role', 'US')
 
+    def test_publisher_does_not_have_budget(self):
+        user = User('Awesome name', 'dummy@email.com', 'dummy-password', 'publisher', 'US')
+        self.assertFalse(user.has_budget())
+
+    def test_advertiser_does_have_budget(self):
+        user = User('Awesome name', 'dummy@email.com', 'dummy-password', 'advertiser', 'US')
+        self.assertTrue(user.has_budget())
+
+    def test_publisher_does_not_have_budget(self):
+        user = User('Awesome name', 'dummy@email.com', 'dummy-password', 'publisher', 'US')
+        self.assertFalse(user.has_budget())
+
+    def test_us_advertiser_has_10000_as_initial_budget(self):
+        user = User('Awesome name', 'dummy@email.com', 'dummy-password', 'advertiser', 'US')
+        self.assertEqual(10000, user.initial_budget())
+    
+    def test_non_us_advertiser_has_1000_as_initial_budget(self):
+        user = User('Awesome name', 'dummy@email.com', 'dummy-password', 'advertiser', 'ES')
+        self.assertEqual(1000, user.initial_budget())
