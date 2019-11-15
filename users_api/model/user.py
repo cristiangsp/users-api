@@ -4,6 +4,9 @@ import uuid
 from users_api.exception.user import NameTooShort, PasswordTooShort, RoleNotValid, EmailNotValid
 
 class User:
+    ROLE_ADVERTISER = 'advertiser'
+    ROLE_PUBLISHER  = 'publisher'
+
     def __init__(self, name, email, password, role, country):
         self.__assert_name_is_valid(name)
         self.__assert_password_is_valid(password)
@@ -30,8 +33,17 @@ class User:
             raise EmailNotValid()
 
     def __assert_role_is_valid(self, role):
-        if not role in ['advertiser', 'publisher']:
+        if not role in [User.ROLE_ADVERTISER, User.ROLE_PUBLISHER]:
             raise RoleNotValid()
+
+    def has_budget(self):
+        return self.role == User.ROLE_ADVERTISER
+
+    def initial_budget(self):
+        if (self.country == 'US'):
+            return 10000
+    
+        return 1000
 
     def to_dict(self):
         return {

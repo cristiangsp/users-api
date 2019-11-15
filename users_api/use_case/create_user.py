@@ -18,16 +18,6 @@ class CreateUser:
         user = User(name, email, password, role, country)
         users_database.insert(user.to_dict())
 
-        if user.role == 'advertiser':
-            budget = Budget()
-            budget.id = str(uuid.uuid4())
-            budget.user_id = user.id
-
-            user_country = user.country
-
-            if (user_country == 'US'):
-                budget.amount = 10000
-            else:
-                budget.amount = 1000
-
+        if user.has_budget():
+            budget = Budget(user.id, user.initial_budget())
             budget_database.insert(budget.to_dict())
