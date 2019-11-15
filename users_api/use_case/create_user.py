@@ -1,6 +1,7 @@
 import pycountry
 import uuid
 
+from pubsub import pub
 from users_api.database import users_database, budget_database
 from users_api.model.user import User
 from users_api.model.budget import Budget
@@ -18,6 +19,4 @@ class CreateUser:
         user = User(name, email, password, role, country)
         users_database.insert(user.to_dict())
 
-        if user.has_budget():
-            budget = Budget(user.id, user.initial_budget())
-            budget_database.insert(budget.to_dict())
+        pub.sendMessage("user.created", user=user)
