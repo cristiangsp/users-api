@@ -38,3 +38,6 @@ If everything is set up properly you should see an empty result:
 ```
 []
 ```
+
+# Slides
+Find next the slides to follow the workshop: [Refactoring a web application with Python](https://www.slideshare.net/cristiangsp/refactoring-a-web-application-with-python)
