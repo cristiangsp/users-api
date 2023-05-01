@@ -1,4 +1,4 @@
-flask==1.1.1
+flask==2.3.2
 pycountry==19.8.18
 pylint==2.4.2
 pypubsub==4.0.3
